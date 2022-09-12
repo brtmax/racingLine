@@ -78,6 +78,14 @@ int main(void) {
 
         cv::Mat imageThreshCopy = imageThreshhold.clone();
 
+        std::vector<std::vector<cv::Point>> contours;
+
+        cv::findContours(imageThreshCopy, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+
+        cv::Mat imgContours(imageThreshhold.size(), CV_8UC3, SCALAR_BLACK);
+
+        cv::drawContours(imgContours, contours, -1, SCALAR_WHITE, -1);
+
 
     }
 
