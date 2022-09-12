@@ -1,3 +1,10 @@
+// Learning project, mostly from the tutorials that come with OpenCV.
+// End goal is to detect F1 cars and the lines they are taking around a corner
+// and to compare that line to see how much they are off from the ideal racing line
+// I know the code looks horribly right now, I will refactor it soon
+// And most of the comments are probably unneccesary for most folks, but
+// they are for me to understand the code better in the future
+
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
@@ -6,7 +13,7 @@
 
 #include "Blob.h"
 
-// I know the code looks horribly right now, I will refactor it soon
+
 
 const cv::Scalar SCALAR_BLACK = cv::Scalar(0.0, 0.0, 0.0);
 const cv::Scalar SCALAR_WHITE = cv::Scalar(255.0, 255.0, 255.0);
@@ -57,6 +64,19 @@ int main(void) {
         cv::absdiff(imageFrame1Copy, imageFrame2Copy, imageDifference);
 
         cv::threshold(imageDifference, imageThreshhold, 30, 255.0, CV_THRESH_BINARY);
+
+        cv::imshow("imageThreshhold", imageThreshhold);
+
+        cv::Mat structuringElement3x3 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+        cv::Mat structuringElement5x5 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
+        cv::Mat structuringElement7x7 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(7, 7));
+        cv::Mat structuringElement9x9 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(9, 9));
+
+        cv::dilate(imageThreshhold, imageThreshhold, structuringElement5x5);
+        cv::dilate(imageThreshhold, imageThreshhold, structuringElement5x5);
+        cv::erode(imageThreshhold, imageThreshhold, structuringElement5x5);
+
+        cv::Mat imageThreshCopy = imageThreshhold.clone();
 
 
     }
