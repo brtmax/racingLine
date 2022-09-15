@@ -19,17 +19,17 @@ const cv::Scalar SCALAR_BLACK = cv::Scalar(0.0, 0.0, 0.0);
 const cv::Scalar SCALAR_WHITE = cv::Scalar(255.0, 255.0, 255.0);
 const cv::Scalar SCALAR_BLUE = cv::Scalar(255.0, 0.0, 0.0);
 const cv::Scalar SCALAR_GREEN = cv::Scalar(0.0, 200.0, 0.0);
-const cv::Scalar SCALAR_RED = cv::Scalar)0.0, 0.0, 255.0);
+const cv::Scalar SCALAR_RED = cv::Scalar(0.0, 0.0, 255.0);
 
 int main(void) {
 
     cv:VideoCapture capturedVideo;
-    cv::Mat imageFrame1
-    cv::Mat imageFrame2
+    cv::Mat imageFrame1;
+    cv::Mat imageFrame2;
 
     capturedVideo.open(""); // Enter video file 
 
-    if (!capVideo.isOpened()) {
+    if (!capturedVideo.isOpened()) {
 
         std::cout << "\nError reading video file" << std::endl << std::endl;
         return 0;
@@ -102,7 +102,7 @@ int main(void) {
                 blobs.push_back(possibleBlob);
             }
 
-            cv::Mat imgConvexHulls(imgTresh.size(), CV_8UC3, SCALAR_BLACK);
+            cv::Mat imgConvexHulls(imageThreshhold.size(), CV_8UC3, SCALAR_BLACK);
 
             convexHulls.clear();
 
