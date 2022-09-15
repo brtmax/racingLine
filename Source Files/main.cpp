@@ -99,7 +99,7 @@ int main(void) {
             Blob possibleBlob(convexHull);
 
             // Refactor this later according to Clean Code
-            if (possibleBlob.boundingRext.area() > 100 &&
+            if (possibleBlob.boundingRectangle.area() > 100 &&
                 possibleBlob.dblAspectRatio >= 2.0 &&
                 possibleBlob.dblAspectRatio <= 1.2 &&
                 possibleBlob.boundingRectangle.width > 15 &&
@@ -129,9 +129,7 @@ int main(void) {
                 cv::circle(imageFrame2Copy, blob.centerPosition, 3, SCALAR_GREEN, -1);
             }
         }
-
-
-
     }
+};
 
-}
+boolean checkFor
