@@ -86,6 +86,31 @@ int main(void) {
 
         cv::drawContours(imgContours, contours, -1, SCALAR_WHITE, -1);
 
+        cv::imshow("imgContours", imgContours);
+
+        std::vector<std::vector<cv::Point>> convexHulls(contours.size());
+
+        for (unsigned int i = 0; i < contours.size(); i++) {
+
+            cv::convexHull(contours[i], convexHulls[i])
+        }
+
+        for (auto &convexHull : convexHulls) {
+            Blob possibleBlob(convexHull);
+
+            // Refactor this later according to Clean Code
+            if (possibleBlob.boundingRext.area() > 100 &&
+                possibleBlob.dblAspectRatio >= 2.0 &&
+                possibleBlob.dblAspectRatio <= 1.2 &&
+                possibleBlob.boundingRectangle.width > 15 &&
+                possibleBlob.boundingRectangle.height > 20 &&
+                possibleBlob.dblDiagonalSize > 30.0) {
+                    blobs.push_back(possibleBlob);
+                }
+            )
+        }
+
+
 
     }
 
