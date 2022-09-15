@@ -13,9 +13,10 @@ Blob::Blob(std::vector<cv::Point> _contour) {
 
     dblAspectRatio = (float)boundingRectangle.width / (float)boundingRectangle.height;
 
-    boolean isRealBlob() {
 
-        if (checkRectangleProperties(boundingRectangle) && checkRatioProperties(dblAspectRatio, dblDiagonalSize, )){
+    // Need to validate these values later, don't know if correct
+    boolean isRealBlob() {
+        if (checkRectangleProperties(boundingRectangle) && checkRatioProperties(dblAspectRatio, dblDiagonalSize)){
             return true;
         } 
         return false;
@@ -29,16 +30,10 @@ Blob::Blob(std::vector<cv::Point> _contour) {
     }
 
     boolean checkRatioProperties() {
-
-
+        if (dblAspectRatio >= 2.0 && dblAspectRatio <= 1.2 && possibleBlob.dblDiagonalSize > 30.0) {
+            return true;
+        }
+        return false;
     }
 }
 
-if (possibleBlob.boundingRectangle.area() > 100 &&
-                possibleBlob.dblAspectRatio >= 2.0 &&
-                possibleBlob.dblAspectRatio <= 1.2 &&
-                possibleBlob.boundingRectangle.width > 15 &&
-                possibleBlob.boundingRectangle.height > 20 &&
-                possibleBlob.dblDiagonalSize > 30.0) {
-                    blobs.push_back(possibleBlob);
-                }

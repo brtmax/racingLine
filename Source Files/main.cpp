@@ -99,15 +99,10 @@ int main(void) {
             Blob possibleBlob(convexHull);
 
             // Refactor this later according to Clean Code
-            if (possibleBlob.boundingRectangle.area() > 100 &&
-                possibleBlob.dblAspectRatio >= 2.0 &&
-                possibleBlob.dblAspectRatio <= 1.2 &&
-                possibleBlob.boundingRectangle.width > 15 &&
-                possibleBlob.boundingRectangle.height > 20 &&
-                possibleBlob.dblDiagonalSize > 30.0) {
-                    blobs.push_back(possibleBlob);
-                }
-            )
+
+            if (possibleBlob.isRealBlob) {
+                blobs.push_back(possibleBlob);
+            }
 
             cv::Mat imgConvexHulls(imgTresh.size(), CV_8UC3, SCALAR_BLACK);
 
@@ -131,5 +126,3 @@ int main(void) {
         }
     }
 };
-
-boolean checkFor
