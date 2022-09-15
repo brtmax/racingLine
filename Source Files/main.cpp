@@ -98,8 +98,6 @@ int main(void) {
         for (auto &convexHull : convexHulls) {
             Blob possibleBlob(convexHull);
 
-            // Refactor this later according to Clean Code
-
             if (possibleBlob.isRealBlob) {
                 blobs.push_back(possibleBlob);
             }
