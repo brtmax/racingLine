@@ -13,8 +13,6 @@
 
 #include "Blob.h"
 
-
-
 const cv::Scalar SCALAR_BLACK = cv::Scalar(0.0, 0.0, 0.0);
 const cv::Scalar SCALAR_WHITE = cv::Scalar(255.0, 255.0, 255.0);
 const cv::Scalar SCALAR_BLUE = cv::Scalar(255.0, 0.0, 0.0);
@@ -23,7 +21,7 @@ const cv::Scalar SCALAR_RED = cv::Scalar(0.0, 0.0, 255.0);
 
 int main(void) {
 
-    cv:VideoCapture capturedVideo;
+    cv::VideoCapture capturedVideo;
     cv::Mat imageFrame1;
     cv::Mat imageFrame2;
 
@@ -91,14 +89,13 @@ int main(void) {
         std::vector<std::vector<cv::Point>> convexHulls(contours.size());
 
         for (unsigned int i = 0; i < contours.size(); i++) {
-
-            cv::convexHull(contours[i], convexHulls[i])
+            cv::convexHull(contours[i], convexHulls[i]);
         }
 
         for (auto &convexHull : convexHulls) {
             Blob possibleBlob(convexHull);
 
-            if (possibleBlob.isRealBlob) {
+            if (isRealBlob(possibleBlob)) {
                 blobs.push_back(possibleBlob);
             }
 
@@ -124,3 +121,26 @@ int main(void) {
         }
     }
 };
+
+  // Need to validate these values later, don't know if correct
+    bool isRealBlob(Blob blob) {
+        if (checkRectangleProperties(blob.boundingRectangle) && checkRatioProperties(blob.dblAspectRatio, blob.dblDiagonalSize)){
+            return true;
+        } 
+        return false;
+    }
+   
+
+    bool checkRectangleProperties(cv::Rect boundingRectangle) {
+        if (boundingRectangle.width > 15 && boundingRectangle.height > 20 && boundingRectangle.area() > 100) {
+            return true;
+        }
+        return false;
+    }
+
+    bool checkRatioProperties(float dblAspectRatio, float dblDiagonalSize) {
+        if (dblAspectRatio >= 2.0 && dblAspectRatio <= 1.2 && dblDiagonalSize > 30.0) {
+            return true;
+        }
+        return false;
+    }
