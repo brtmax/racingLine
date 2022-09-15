@@ -108,6 +108,26 @@ int main(void) {
                     blobs.push_back(possibleBlob);
                 }
             )
+
+            cv::Mat imgConvexHulls(imgTresh.size(), CV_8UC3, SCALAR_BLACK);
+
+            convexHulls.clear();
+
+            for (auto &blob : blobs) {
+                convexHulls.push_back(blob.contour);
+            }
+
+            cv::drawContours(imgConvexHulls, convexHulls, -1, SCALAR_WHITE, -1);
+
+            cv::imshow("imgConvexHulls", imgConvexHulls);
+
+            imageFrame2Copy = imageFrame2.clone();
+
+            for (auto &blob : blobs) {
+
+                cv::rectangle(imageFrame2Copy, blob.boundingRectangle, SCALAR_RED, 2);
+                cv::circle(imageFrame2Copy, blob.centerPosition, 3, SCALAR_GREEN, -1);
+            }
         }
 
 
