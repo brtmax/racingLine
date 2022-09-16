@@ -33,7 +33,7 @@ int main(void) {
         return 0;
     }
 
-    if (capturedVideo.get(CV_CAP_PROP_FRAME_COUNT) < 2) {
+    if (capturedVideo.get(cv::CAP_PROP_FRAME_COUNT) < 2) {
         std::cout << "\nerror: video file must have at least two frams";
         return 0;
     }
@@ -53,15 +53,17 @@ int main(void) {
         cv::Mat imageDifference;
         cv::Mat imageThreshhold;
 
-        cv::cvtColor(imageFrame1Copy, imageFrame1Copy, CV_BGR2GRAY);
-        cv::cvtColor(imageFrame2Copy, imageFrame2Copy, CV_BGR2GRAY);
+        // Convert frames from RGB to Grayscale
+        cv::cvtColor(imageFrame1Copy, imageFrame1Copy, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(imageFrame2Copy, imageFrame2Copy, cv::COLOR_BGR2GRAY);
 
+        // Blur images using Gaussian Filter
         cv::GaussianBlur(imageFrame1Copy, imageFrame1Copy, cv::Size(5, 5), 0);
         cv::GaussianBlur(imageFrame2Copy, imageFrame2Copy, cv::Size(5, 5), 0);
 
         cv::absdiff(imageFrame1Copy, imageFrame2Copy, imageDifference);
 
-        cv::threshold(imageDifference, imageThreshhold, 30, 255.0, CV_THRESH_BINARY);
+        cv::threshold(imageDifference, imageThreshhold, 30, 255.0,cv::THRESH_BINARY);
 
         cv::imshow("imageThreshhold", imageThreshhold);
 
