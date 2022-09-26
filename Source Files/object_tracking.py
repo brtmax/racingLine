@@ -8,37 +8,39 @@ import sys
 
 from matplotlib.pyplot import box
 
-# construct argument parser and parse arguments
+tracker_types = ['BOOSTING', 'MIL', 'KCF', 'TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
+tracker_type = tracker_types[2]
 
-# argument_paser = argparse.ArgumentParser()
 
-# --tracker specifies OpenCV tracker (csrt, kcf, boosting, mil, tld, medianflow, mosse)
-# argument_paser.add_argument("-t", "--tracker", type=str, default="kcf", help="OpenCV object tracker type")
-# args = vars(argument_paser.parse_args())
-
-# Using OpenCV 4.6.0
-OPENCV_OBJECT_TRACKER = {
-    "csrt": cv2.TrackerCSRT_create(),
-    "kcf": cv2.TrackerKCF_create(),
-    "boosting": cv2.legacy.TrackerBoosting_create(),
-    "mil": cv2.TrackerMIL_create(),
-    "tld": cv2.legacy.TrackerTLD_create(),
-    "medianflow": cv2.legacy.TrackerMedianFlow_create(),
-    #"goturn": cv2.TrackerGOTURN_create(),
-    "mosse": cv2.legacy.TrackerMOSSE_create(),
-}
-
+if tracker_type == 'BOOSTING':
+    tracker = cv2.legacy.TrackerBoosting_create()
+if tracker_type == 'MIL':
+    tracker = cv2.TrackerMIL_create() 
+if tracker_type == 'KCF':
+    tracker = cv2.TrackerKCF_create() 
+if tracker_type == 'TLD':
+    tracker = cv2.legacy.TrackerTLD_create() 
+if tracker_type == 'MEDIANFLOW':
+    tracker = cv2.legacy.TrackerMedianFlow_create() 
+# if tracker_type == 'GOTURN':
+#    tracker = cv2.TrackerGOTURN_create()
+if tracker_type == 'MOSSE':
+    tracker = cv2.legacy.TrackerMOSSE_create()
+if tracker_type == "CSRT":
+    tracker = cv2.TrackerCSRT_create()
 tracker = cv2.TrackerKCF_create()
 
 
 # Read video
-video = cv2.VideoCapture("resources/helicam.mp4")
+video = cv2.VideoCapture("resources/street.mp4")
+ret, frame = video.read()
 
 # Exit if video is not opened.
 if not video.isOpened(): 
     print("Failed to open video")
     sys.exit()
     
+# Read first frame
 ok, frame = video.read()
 if not ok:
     print("Cannot read video file")
