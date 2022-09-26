@@ -10,11 +10,11 @@ from matplotlib.pyplot import box
 
 # construct argument parser and parse arguments
 
-argument_paser = argparse.ArgumentParser()
+# argument_paser = argparse.ArgumentParser()
 
 # --tracker specifies OpenCV tracker (csrt, kcf, boosting, mil, tld, medianflow, mosse)
-argument_paser.add_argument("-t", "--tracker", type=str, default="kcf", help="OpenCV object tracker type")
-args = vars(argument_paser.parse_args())
+# argument_paser.add_argument("-t", "--tracker", type=str, default="kcf", help="OpenCV object tracker type")
+# args = vars(argument_paser.parse_args())
 
 # Using OpenCV 4.6.0
 OPENCV_OBJECT_TRACKER = {
@@ -24,11 +24,11 @@ OPENCV_OBJECT_TRACKER = {
     "mil": cv2.TrackerMIL_create(),
     "tld": cv2.legacy.TrackerTLD_create(),
     "medianflow": cv2.legacy.TrackerMedianFlow_create(),
-    "goturn": cv2.TrackerGOTURN_create(),
-    "mosse": cv2.legy.TrackerMOSSE_create(),
+    #"goturn": cv2.TrackerGOTURN_create(),
+    "mosse": cv2.legacy.TrackerMOSSE_create(),
 }
 
-tracker = OPENCV_OBJECT_TRACKER[args["tracker"]]()
+tracker = cv2.TrackerKCF_create()
 
 
 # Read video
@@ -70,18 +70,18 @@ while True:
         cv2.rectangle(frame, p1, p2, (255,0,0), 2, 1)
     else :
         # Tracking Failure
-        cv2.putText(frame, "Tracking failure", (100,80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 0.75, (50,170,50),2);
+        cv2.putText(frame, "Tracking failure", (100,80), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
         
         # Display tracker on frame
-        cv2.putText(frame, args["tracker"], (100,20), cv2.FONT_HERSHEY_SCRIPT_COMPLEX, 0.75, (50,170,50),2);
+        cv2.putText(frame, "kcf", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
         
         # Display FPS on frame
-        cv2.putText(frame, "FPS: " + str(int(fps)), (100,50), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 0.75, (50,170,50),2);
+        cv2.putText(frame, "FPS: " + str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
         
         # Display result
         cv2.imshow("Tracking", frame)
         
-        k = cv2.waitkey(0) & 0xff
+        k = cv2.waitKey(1) & 0xff
         if k == 27 : break
         
         
