@@ -31,25 +31,23 @@ if tracker_type == "CSRT":
 tracker = cv2.TrackerKCF_create()
 
 
-# Read video
+# Read first frame
 video = cv2.VideoCapture("resources/street.mp4")
 ret, frame = video.read()
 
-# Exit if video is not opened.
-if not video.isOpened(): 
-    print("Failed to open video")
-    sys.exit()
-    
-# Read first frame
-ok, frame = video.read()
-if not ok:
-    print("Cannot read video file")
-    sys.exit()
+frame_height, frame_width = frame.shape[:2]
+# Resize video for better view
+frame = cv2.resize(frame, [frame_width//2, frame_height//2])
+# Initialize video writer to save the results
+output = cv2.VideoWriter(f'{tracker_type}.avi', cv2.VideoWriter_fourcc(*'XVID'), 60.0, (frame_width//2, frame_height//2), True)
+
+if not ret:
+    print('Cannot read the video')
     
 bounding_box = cv2.selectROI(frame, False)
 
 # Initialize the tracker with the first frame and bounding box
-ok = tracker.init(frame, bounding_box)
+ret = tracker.init(frame, bounding_box)
 
 while True:
     ok, frame = video.read()
